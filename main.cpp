@@ -2,15 +2,18 @@
 #include <cstdlib>
 #include "Program.h"
 #include <SDL.h>
+#include "Window.h"
 
 int main(int argc, char ** argv)
 {
-	SDL_Init(SDL_INIT_VIDEO);
+	Program start;
 
-	SDL_Window * screen = SDL_CreateWindow("My SDL Empty Window",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
-
-	SDL_Quit();
-
+	if (start.initialize())
+	{
+		if (start.loadMedia()) {
+			start.draw();
+		}
+	}
+	system("pause");
 	return 0;
 }

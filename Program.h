@@ -1,8 +1,20 @@
 #pragma once
-class Program
-{
+
+#include <iostream>
+#include <SDL.h>
+#include "Window.h"
+
+class Program {
 public:
 	Program();
-	~Program();
+	virtual ~Program();
+	bool initialize();
+	bool loadMedia();
+	void draw();
+
+
+private:
+	Window * _window;
+	SDL_Surface * _image;
 };
 
