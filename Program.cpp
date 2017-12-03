@@ -32,22 +32,7 @@ bool Program::initialize()
 	return true;
 }
 
-bool Program::loadMedia()
-{
-
-	_image = SDL_LoadBMP("menu.bmp");
-
-	if (_image == NULL)
-	{
-		std::cout << "Unable to load image! SDL_Error: " << SDL_GetError() << std::endl;
-		system("pause");
-		return false;
-	}
-
-	return true;
-}
-
 void Program::draw()
 {
-	_window->draw(_image);
+	_window->draw(_image.getImage(Image::MENU));
 }

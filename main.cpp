@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "Program.h"
 #include <SDL.h>
-#include "Window.h"
 
 int main(int argc, char ** argv)
 {
@@ -10,9 +9,7 @@ int main(int argc, char ** argv)
 
 	if (start.initialize())
 	{
-		if (start.loadMedia()) {
-			start.draw();
-		}
+		start.draw();		
 	}
 	system("pause");
 	return 0;

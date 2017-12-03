@@ -3,20 +3,27 @@
 #include <iostream>
 #include <cstdlib>
 
-Window::Window(int w, int h) : SCREEN_WIDTH(w), SCREEN_HEIGHT(h)
+Window::Window(int w, int h) : _size(w, h)
 {
 	if (w < 0 || h < 0) {
 		exit(-1);
 	}
 
-	createWindow();
+	_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
+	if (_window == NULL)
+	{
+		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError();
+		system("pause");
+		exit(-1);
+	}
+
+	_screenSurface = SDL_GetWindowSurface(_window);
 }
 
 
 Window::~Window()
 {
-	delete _window;
-	delete _screenSurface;
+	SDL_DestroyWindow( _window);
 }
 
 void Window::draw(SDL_Surface * image)
@@ -26,14 +33,6 @@ void Window::draw(SDL_Surface * image)
 
 	SDL_UpdateWindowSurface(_window);
 
-}
-
-void Window::createWindow()
-{
-	_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-
-	_screenSurface = SDL_GetWindowSurface(_window);
 }
 
 
