@@ -7,11 +7,11 @@ class BasicObject
 {
 public:
 
-	virtual ~BasicObject();
-	SDL_Surface * getImage();
+	virtual ~BasicObject() = default;
+	SDL_Surface* getImage();
+	Point getPosition();
 
 protected:
-
 	BasicObject(Point p, SDL_Surface * i);
 	BasicObject(int x, int y, SDL_Surface * i);
 

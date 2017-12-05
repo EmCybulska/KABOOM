@@ -15,6 +15,5 @@ public:
 
 private:
 	Window * _window;
-	ImageHolder _image;
 };
 

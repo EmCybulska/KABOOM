@@ -2,10 +2,10 @@
 
 
 
-Map::Map(uint8_t w, uint8_t h)
+Map::Map(int x, int y)
 {
+	_size = Point(x, y);
 }
-
 
 Map::~Map()
 {

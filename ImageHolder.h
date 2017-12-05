@@ -5,19 +5,22 @@
 
 enum Image {
 	MENU,
-	IMG1,
-	IMG2
+	GROUND1,
+	GROUND2
 };
 
 class ImageHolder
 {
 public:
-	ImageHolder();
+	
 	virtual ~ImageHolder();
-
 	SDL_Surface * getImage(Image i);
+	static ImageHolder & getInstance();
 
 private:
+	ImageHolder();
+	ImageHolder(const ImageHolder& copy) = delete;
 	std::vector<SDL_Surface*> _images;
+
 };
 

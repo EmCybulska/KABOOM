@@ -1,15 +1,18 @@
 #pragma once
 
-#include <cstdint>
+#include "Point.h"
+#include "BasicObject.h"
 
 class Map
 {
+	friend class MapGenerator;
+
 public:
-	Map(uint8_t w, uint8_t h);
+	Map(int x, int y);
 	virtual ~Map();
-	void draw();
+
 private:
-	std::uint8_t _x;
-	std::uint8_t _y;
+	Point _size;
+	BasicObject **_map;
 };
 

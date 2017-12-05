@@ -34,5 +34,5 @@ bool Program::initialize()
 
 void Program::draw()
 {
-	_window->draw(_image.getImage(Image::MENU));
+	
 }

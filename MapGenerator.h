@@ -1,16 +1,13 @@
 #pragma once
 
-#include <cstdint>
+#include "Map.h"
 
 class MapGenerator
 {
 public:
-	MapGenerator(uint8_t x = 12, uint8_t y = 12);
-	virtual ~MapGenerator();
-	void generate();
+	static void generate(Map & map);
 
 private:
-	uint8_t _mapSize_x;
-	uint8_t _mapSize_y;
+
 };
 
