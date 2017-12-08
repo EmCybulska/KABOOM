@@ -6,7 +6,8 @@
 enum Image {
 	MENU,
 	GROUND1,
-	GROUND2
+	GROUND2,
+	BACKGROUND,
 };
 
 class ImageHolder

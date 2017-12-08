@@ -9,7 +9,7 @@ Window::Window(int w, int h) : _size(w, h)
 		exit(-1);
 	}
 
-	_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
+	_window = SDL_CreateWindow("KABOOM!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
 	if (_window == NULL)
 	{
 		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError();
@@ -26,13 +26,14 @@ Window::~Window()
 	SDL_DestroyWindow( _window);
 }
 
-void Window::draw(SDL_Surface * image)
+void Window::draw(SDL_Surface * image, SDL_Rect dest)
 {
+	SDL_BlitSurface(image, NULL, _screenSurface, &dest);
+}
 
-	SDL_BlitSurface(image, NULL, _screenSurface, NULL);
-
+void Window::update()
+{
 	SDL_UpdateWindowSurface(_window);
-
 }
 
 

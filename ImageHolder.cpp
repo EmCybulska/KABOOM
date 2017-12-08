@@ -4,10 +4,10 @@
 
 ImageHolder::ImageHolder()
 {
-	_images.push_back(SDL_LoadBMP("Resources/Images/menu.bmp"));
-	_images.push_back(SDL_LoadBMP("Resources/Images/ground1.bmp"));
-	_images.push_back(SDL_LoadBMP("Resources/Images/ground2.bmp"));
-	_images.push_back(SDL_LoadBMP("Resources/Images/ground3.bmp"));
+	_images.push_back(SDL_LoadBMP("resources/images/menu.bmp"));
+	_images.push_back(SDL_LoadBMP("resources/images/ground1.bmp"));
+	_images.push_back(SDL_LoadBMP("resources/images/background.bmp"));
+	_images.push_back(SDL_LoadBMP("resources/images/ground3.bmp"));
 }
 
 

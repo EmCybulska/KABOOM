@@ -1,7 +1,5 @@
 #include "BasicObject.h"
 
-
-
 BasicObject::BasicObject(Point p, SDL_Surface * i)
 {
 	_pos = p;
@@ -10,7 +8,8 @@ BasicObject::BasicObject(Point p, SDL_Surface * i)
 
 BasicObject::BasicObject(int x, int y, SDL_Surface * i) 
 {
-	(*this) = BasicObject({ x, y }, i);
+	_pos = { x, y };
+	_image = i;
 }
 
 SDL_Surface * BasicObject::getImage()

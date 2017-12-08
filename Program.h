@@ -4,6 +4,8 @@
 #include <SDL.h>
 #include "Window.h"
 #include "ImageHolder.h"
+#include "Map.h"
+#include "MapGenerator.h"
 
 class Program {
 public:
@@ -12,8 +14,8 @@ public:
 	bool initialize();
 	void draw();
 
-
 private:
 	Window * _window;
+	Map *_map;
 };
 

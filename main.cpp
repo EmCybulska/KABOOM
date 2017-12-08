@@ -5,11 +5,11 @@
 
 int main(int argc, char ** argv)
 {
-	Program start;
+	Program p;
 
-	if (start.initialize())
+	if (p.initialize())
 	{
-		start.draw();		
+		p.draw();		
 	}
 	system("pause");
 	return 0;

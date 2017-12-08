@@ -10,9 +10,10 @@ class Map
 public:
 	Map(int x, int y);
 	virtual ~Map();
-
+	BasicObject *** getMap();
+	
 private:
 	Point _size;
-	BasicObject **_map;
+	BasicObject ***_map;
 };
 

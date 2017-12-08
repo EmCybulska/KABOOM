@@ -9,10 +9,12 @@ class Window
 
 public:
 
-	Window(int w = 640, int h = 415);
+	Window(int w = 640, int h = 480);
 	virtual ~Window();
 
-	void draw(SDL_Surface * image);
+	void draw(SDL_Surface * image, SDL_Rect dest);
+	void update();
+	void scaleImage(SDL_Surface *image, int w, int h, int x, int y);
 
 private:
 

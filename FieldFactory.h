@@ -6,7 +6,6 @@
 
 enum Block {
 	GROUND,
-
 };
 
 class FieldFactory
