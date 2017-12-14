@@ -3,8 +3,9 @@
 #include <iostream>
 #include <SDL.h>
 #include "Point.h"
+#include "EventNotification.h"
 
-class Window
+class Window : public EventNotification
 {
 
 public:
@@ -14,7 +15,7 @@ public:
 
 	void draw(SDL_Surface * image, SDL_Rect dest);
 	void update();
-	void scaleImage(SDL_Surface *image, int w, int h, int x, int y);
+	void notifyEvent() override;
 
 private:
 

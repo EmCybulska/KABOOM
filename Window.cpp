@@ -36,4 +36,9 @@ void Window::update()
 	SDL_UpdateWindowSurface(_window);
 }
 
+void Window::notifyEvent()
+{
+	exit(0);
+}
+
 

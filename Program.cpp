@@ -32,6 +32,9 @@ bool Program::initialize()
 	_map = new Map(3, 3);
 	MapGenerator::generate(*_map);
 
+	_eventManager.registerEvent(SDL_QUIT, _window);
+	_eventManager.registerEvent(SDL_KEYDOWN, _window);
+
 	return true;
 }
 
@@ -51,4 +54,9 @@ void Program::draw()
 		}
 	}
 	_window->update();
+
+	while (true) {
+		_eventManager.processEvents();
+		Sleep(100);
+	}
 }

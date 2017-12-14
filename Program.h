@@ -6,6 +6,8 @@
 #include "ImageHolder.h"
 #include "Map.h"
 #include "MapGenerator.h"
+#include "EventManager.h"
+#include <Windows.h>
 
 class Program {
 public:
@@ -17,5 +19,6 @@ public:
 private:
 	Window * _window;
 	Map *_map;
+	EventManager _eventManager;
 };
 
