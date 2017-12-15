@@ -29,7 +29,7 @@ bool Program::initialize()
 		return false;
 	}
 
-	_map = new Map(3, 3);
+	_map = new Map(15, 15);
 	MapGenerator::generate(*_map);
 
 	_eventManager.registerEvent(SDL_QUIT, _window);
@@ -43,13 +43,13 @@ void Program::draw()
 {
 	BasicObject*** m = _map->getMap();
 
-	//_window->draw(ImageHolder::getInstance().getImage(Image::BACKGROUND), SDL_Rect());
+	_window->draw(ImageHolder::getInstance().getImage(Image::BACKGROUND), SDL_Rect());
 	
-	for (int i = 0; i < 3; ++i) {
-		for (int j = 0; j < 3; ++j) {
+	for (int i = 0; i < 15; ++i) {
+		for (int j = 0; j < 15; ++j) {
 			BasicObject* b = m[i][j];
-			_window->draw(b->getImage(), {b->getPosition().getX(), b->getPosition().getY(), 150, 150});
-			SDL_Delay(100);
+			_window->draw(b->getImage(), {b->getPosition().getX(), b->getPosition().getY(), 30, 30});
+			SDL_Delay(10);
 			_window->update();
 		}
 	}
