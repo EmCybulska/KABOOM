@@ -4,23 +4,25 @@
 
 ImageHolder::ImageHolder()
 {
-	_images.push_back(SDL_LoadBMP("resources/images/menu.bmp"));
-	_images.push_back(SDL_LoadBMP("resources/images/ground1.bmp"));
-	_images.push_back(SDL_LoadBMP("resources/images/background.bmp"));
-	_images.push_back(SDL_LoadBMP("resources/images/ground3.bmp"));
+	_imagesMap[Image::MENU] = addImage("menu.png");
+}
+
+sf::Texture * ImageHolder::addImage(std::string fileName)
+{
+	sf::Texture * t;
+	std::string s = "resources/" + fileName;
+	t->loadFromFile(s);
+	return t;
 }
 
 
 ImageHolder::~ImageHolder()
 {
-	for (SDL_Surface * i : _images) {
-		SDL_FreeSurface(i);
-	}
 }
 
-SDL_Surface * ImageHolder::getImage(Image i)
+sf::Texture * ImageHolder::getImage(Image i)
 {
-	return _images[i];
+	return _imagesMap[i];
 }
 
 ImageHolder & ImageHolder::getInstance()

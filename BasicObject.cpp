@@ -1,24 +1,23 @@
 #include "BasicObject.h"
 
-BasicObject::BasicObject(Point p, SDL_Surface * i)
+BasicObject::BasicObject(Point p, sf::Texture t)
 {
 	_pos = p;
-	_image = i;
+	_t = t;
 }
 
-BasicObject::BasicObject(int x, int y, SDL_Surface * i) 
+BasicObject::BasicObject(int x, int y, sf::Texture t)
 {
 	_pos = { x, y };
-	_image = i;
+	_t = t;
 }
 
-SDL_Surface * BasicObject::getImage()
+sf::Texture BasicObject::getTexture()
 {
-	return _image;
+	return _t;
 }
 
 Point BasicObject::getPosition()
 {
 	return _pos;
 }
-

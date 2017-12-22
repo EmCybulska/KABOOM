@@ -1,27 +1,17 @@
 #pragma once
 
-#include <iostream>
-#include <SDL.h>
-#include "Point.h"
-#include "EventNotification.h"
+#include <SFML/Graphics.hpp>
 
-class Window : public EventNotification
+class Window
 {
-
 public:
-
-	Window(int w = 640, int h = 480);
+	Window(int w = 800, int h = 600);
 	virtual ~Window();
-
-	void draw(SDL_Surface * image, SDL_Rect dest);
-	void update();
-	void notifyEvent() override;
+	bool isOpen();
+	void display();
 
 private:
+	sf::RenderWindow* _window;
 
-	SDL_Window * _window;
-	SDL_Surface * _screenSurface;
-	
-	Point _size;
 };
 

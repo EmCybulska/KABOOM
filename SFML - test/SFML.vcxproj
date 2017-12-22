@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{343705DF-4567-4C1A-AFF3-3040642BA5BB}</ProjectGuid>
-    <RootNamespace>KABOOM</RootNamespace>
+    <ProjectGuid>{2271F3DE-0D80-4591-97E4-0189A53DE42B}</ProjectGuid>
+    <RootNamespace>SFML</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -113,23 +113,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicObject.cpp" />
-    <ClCompile Include="EventManager.cpp" />
-    <ClCompile Include="EventNotification.cpp" />
-    <ClCompile Include="ImageHolder.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BasicObject.h" />
-    <ClInclude Include="EventManager.h" />
-    <ClInclude Include="EventNotification.h" />
-    <ClInclude Include="ImageHolder.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Program.h" />
-    <ClInclude Include="Window.h" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KABOOM", "KABOOM.vcxproj", "{E09269F8-7A28-41D2-B30B-9F943BE8684D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KABOOM", "KABOOM.vcxproj", "{343705DF-4567-4C1A-AFF3-3040642BA5BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Debug|x64.ActiveCfg = Debug|x64
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Debug|x64.Build.0 = Debug|x64
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Debug|x86.ActiveCfg = Debug|Win32
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Debug|x86.Build.0 = Debug|Win32
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Release|x64.ActiveCfg = Release|x64
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Release|x64.Build.0 = Release|x64
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Release|x86.ActiveCfg = Release|Win32
-		{E09269F8-7A28-41D2-B30B-9F943BE8684D}.Release|x86.Build.0 = Release|Win32
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Debug|x64.ActiveCfg = Debug|x64
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Debug|x64.Build.0 = Debug|x64
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Debug|x86.ActiveCfg = Debug|Win32
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Debug|x86.Build.0 = Debug|Win32
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Release|x64.ActiveCfg = Release|x64
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Release|x64.Build.0 = Release|x64
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Release|x86.ActiveCfg = Release|Win32
+		{343705DF-4567-4C1A-AFF3-3040642BA5BB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

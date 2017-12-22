@@ -1,27 +1,28 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include <unordered_map>
 #include <vector>
-#include <SDL.h>
+#include <iostream>
 
 enum Image {
 	MENU,
+	LEVEL1,
 	GROUND1,
-	GROUND2,
 	BACKGROUND,
 };
 
 class ImageHolder
 {
 public:
-	
+
 	virtual ~ImageHolder();
-	SDL_Surface * getImage(Image i);
+	sf::Texture * getImage(Image i);
 	static ImageHolder & getInstance();
 
 private:
 	ImageHolder();
 	ImageHolder(const ImageHolder& copy) = delete;
-	std::vector<SDL_Surface*> _images;
-
+	std::unordered_map<Image, sf::Texture*> _imagesMap;
+	sf::Texture* addImage(std::string path);
 };
-

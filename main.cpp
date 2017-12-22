@@ -1,16 +1,9 @@
-#include <iostream>
-#include <cstdlib>
 #include "Program.h"
-#include <SDL.h>
 
-int main(int argc, char ** argv)
+int main()
 {
 	Program p;
-
-	if (p.initialize())
-	{
-		p.draw();		
-	}
-	system("pause");
+	p.init();
+	p.run();
 	return 0;
 }

@@ -1,21 +1,20 @@
 #pragma once
 
-#include <SDL.h>
+#include <SFML/Graphics.hpp>
 #include "Point.h"
+
 
 class BasicObject
 {
 public:
 	virtual ~BasicObject() = default;
-	SDL_Surface* getImage();
+	sf::Texture getTexture(); //zamiast textury pewnie tu bêd¹ sprajty
 	Point getPosition();
-
 protected:
-	BasicObject(Point p, SDL_Surface * i);
-	BasicObject(int x, int y, SDL_Surface * i);
-
+	BasicObject(Point p, sf::Texture t);
+	BasicObject(int x, int y, sf::Texture t);
 private:
 	Point _pos;
-	SDL_Surface * _image;
+	sf::Texture _t;
 };
 

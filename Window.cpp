@@ -1,44 +1,30 @@
 #include "Window.h"
-#include <SDL.h>
-#include <iostream>
-#include <cstdlib>
 
-Window::Window(int w, int h) : _size(w, h)
+
+
+Window::Window(int w, int h)
 {
-	if (w < 0 || h < 0) {
-		exit(-1);
-	}
-
-	_window = SDL_CreateWindow("KABOOM!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
-	if (_window == NULL)
-	{
-		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError();
-		system("pause");
-		exit(-1);
-	}
-
-	_screenSurface = SDL_GetWindowSurface(_window);
+	_window = new sf::RenderWindow();
+	_window->create(sf::VideoMode(w, h), "KABOOM!");
 }
 
 
 Window::~Window()
 {
-	SDL_DestroyWindow( _window);
 }
 
-void Window::draw(SDL_Surface * image, SDL_Rect dest)
+bool Window::isOpen()
 {
-	SDL_BlitSurface(image, NULL, _screenSurface, &dest);
+	if (!_window) {
+		return false;
+	}
+
+	return _window->isOpen();
 }
 
-void Window::update()
+void Window::display()
 {
-	SDL_UpdateWindowSurface(_window);
-}
-
-void Window::notifyEvent()
-{
-	exit(0);
+	_window->display();
 }
 
 
