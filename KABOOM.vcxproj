@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{343705DF-4567-4C1A-AFF3-3040642BA5BB}</ProjectGuid>
+    <ProjectGuid>{214F67D6-0313-4423-99B0-4788829D7D49}</ProjectGuid>
     <RootNamespace>KABOOM</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -110,26 +110,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImageHolder.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicObject.cpp" />
-    <ClCompile Include="EventManager.cpp" />
-    <ClCompile Include="EventNotification.cpp" />
-    <ClCompile Include="ImageHolder.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BasicObject.h" />
-    <ClInclude Include="EventManager.h" />
-    <ClInclude Include="EventNotification.h" />
     <ClInclude Include="ImageHolder.h" />
-    <ClInclude Include="Point.h" />
-    <ClInclude Include="Program.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

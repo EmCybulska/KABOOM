@@ -1,5 +1,3 @@
-#pragma once
-
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 #include <vector>
@@ -7,9 +5,13 @@
 
 enum Image {
 	MENU,
-	LEVEL1,
+	BOMB,
+	ROBOT1,
+	ROBOT2,
 	GROUND1,
-	BACKGROUND,
+	WALL1,
+	BLOCK1
+	
 };
 
 class ImageHolder
@@ -24,5 +26,5 @@ private:
 	ImageHolder();
 	ImageHolder(const ImageHolder& copy) = delete;
 	std::unordered_map<Image, sf::Texture*> _imagesMap;
-	sf::Texture* addImage(std::string path);
+	sf::Texture* addImage(std::string fileName);
 };
