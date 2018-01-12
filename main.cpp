@@ -16,14 +16,15 @@ void processEvents(sf::RenderWindow *w);
 void generateMap();
 void drawMap(sf::RenderWindow *w);
 void movePlayer();
+bool detectCollision(Player *p);
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "KABOOM!");
-	player1 = new Player(TILE, TILE, *ImageHolder::getInstance().getImage(Image::ROBOT1));
+	player1 = new Player(TILE + 5, TILE + 5, *ImageHolder::getInstance().getImage(Image::ROBOT1));
 	player2 = new Player(SCREEN_W - 2 * TILE, SCREEN_H - 2 * TILE, *ImageHolder::getInstance().getImage(Image::ROBOT2));
-	player1->getImage()->setScale(0.5, 0.5);
-	player2->getImage()->setScale(0.5, 0.5);
+	player1->getImage()->setScale(0.4, 0.4);
+	player2->getImage()->setScale(0.4, 0.4);
 
 	generateMap();
 	//s.setTexture(*ImageHolder::getInstance().getImage(Image::MENU)); //tmp // window.draw(s); // tmp
@@ -77,6 +78,8 @@ void generateMap()
 		map[i][x - 1] = Image::WALL1;
 	}
 
+	//map[3][3] = Image::WALL1;
+
 	map[1][2] = map[2][1] = map[1][1] = Image::GROUND1;
 	map[y - 3][x - 2] = map[y - 2][x - 2] = map[y - 2][x - 3] = Image::GROUND1;
 }
@@ -125,29 +128,58 @@ void processEvents(sf::RenderWindow *w)
 
 void movePlayer() 
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && player1->getY() > 0) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && player1->getY() > 0 && detectCollision(player1) == false) {
 		player1->getImage()->move(0, -player1->getSpeed());
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && player1->getX() > 0) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && player1->getX() > 0 && detectCollision(player1) == false) {
 		player1->getImage()->move(-player1->getSpeed(), 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && player1->getY() < SCREEN_H - TILE) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && player1->getY() < SCREEN_H - player1->getSize()
+		&& detectCollision(player1) == false) {
 		player1->getImage()->move(0, player1->getSpeed());
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && player1->getX() < SCREEN_W - TILE) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && player1->getX() < SCREEN_W - player1->getSize() 
+		&& detectCollision(player1) == false) {
 		player1->getImage()->move(player1->getSpeed(), 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0) {
-		player2->getImage()->move(0, -player2->getSpeed());
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0 && detectCollision(player2) == false) {
+	//	player2->getImage()->move(0, -player2->getSpeed());
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0 && detectCollision(player2) == false) {
+	//	player2->getImage()->move(-player2->getSpeed(), 0);
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - player2->getSize()
+	//	&& detectCollision(player2) == false) {
+	//	player2->getImage()->move(0, player2->getSpeed());
+	//}
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - player2->getSize()
+	//	&& detectCollision(player2) == false) {
+	//	player2->getImage()->move(player2->getSpeed(), 0);
+	//}
+}
+
+bool detectCollision(Player *p)
+{
+	int w = SCREEN_W / TILE;
+	int h = SCREEN_H / TILE;
+	int tile_x = 0;
+	int tile_y = 0;
+
+	for (int i = 0; i < h; ++i) {
+		for (int j = 0; j < w; ++j) {
+			tile_x = j * TILE;
+			if (map[i][j] == Image::BLOCK1 || map[i][j] == Image::WALL1) {
+				//std::cout << tile_x << " " << tile_y << " " << p->getX() << " " << p->getY() << " " << p->getSize() << std::endl;
+				if (p->getX() < tile_x + TILE && p->getX() + p->getSize() > tile_x &&
+					p->getY() < tile_y + TILE && p->getY() + p->getSize() > tile_y) {
+					return true;
+				}
+			}
+		}
+		
+		tile_x = 0;
+		tile_y = (i + 1) * TILE;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0) {
-		player2->getImage()->move(-player2->getSpeed(), 0);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - TILE) {
-		player2->getImage()->move(0, player2->getSpeed());
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - TILE) {
-		player2->getImage()->move(player2->getSpeed(), 0);
-	}
+	return false;
 }

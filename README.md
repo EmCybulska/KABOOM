@@ -1,2 +1,2 @@
 # KABOOM
-SDL and C++ bomberman game
+SFML and C++ bomberman game
