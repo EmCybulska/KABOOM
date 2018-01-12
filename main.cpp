@@ -16,7 +16,7 @@ void processEvents(sf::RenderWindow *w);
 void generateMap();
 void drawMap(sf::RenderWindow *w);
 void movePlayer();
-bool detectCollision(Player *p);
+bool detectCollision(Player *p, int x, int y);
 
 int main()
 {
@@ -128,38 +128,42 @@ void processEvents(sf::RenderWindow *w)
 
 void movePlayer() 
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && player1->getY() > 0 && detectCollision(player1) == false) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && player1->getY() > 0 &&
+		detectCollision(player1, player1->getX(), player1->getY() - 1) == false) {
 		player1->getImage()->move(0, -player1->getSpeed());
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && player1->getX() > 0 && detectCollision(player1) == false) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && player1->getX() > 0 
+		&& detectCollision(player1, player1->getX() - 1, player1->getY()) == false) {
 		player1->getImage()->move(-player1->getSpeed(), 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && player1->getY() < SCREEN_H - player1->getSize()
-		&& detectCollision(player1) == false) {
+		&& detectCollision(player1, player1->getX(), player1->getY() + 1) == false) {
 		player1->getImage()->move(0, player1->getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && player1->getX() < SCREEN_W - player1->getSize() 
-		&& detectCollision(player1) == false) {
+		&& detectCollision(player1, player1->getX() + 1, player1->getY()) == false) {
 		player1->getImage()->move(player1->getSpeed(), 0);
 	}
 
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0 && detectCollision(player2) == false) {
-	//	player2->getImage()->move(0, -player2->getSpeed());
-	//}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0 && detectCollision(player2) == false) {
-	//	player2->getImage()->move(-player2->getSpeed(), 0);
-	//}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - player2->getSize()
-	//	&& detectCollision(player2) == false) {
-	//	player2->getImage()->move(0, player2->getSpeed());
-	//}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - player2->getSize()
-	//	&& detectCollision(player2) == false) {
-	//	player2->getImage()->move(player2->getSpeed(), 0);
-	//}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0 
+		&& detectCollision(player2, player2->getX(), player2->getY() - 1) == false) {
+		player2->getImage()->move(0, -player2->getSpeed());
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0 
+		&& detectCollision(player2, player2->getX() - 1, player2->getY()) == false) {
+		player2->getImage()->move(-player2->getSpeed(), 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - player2->getSize()
+		&& detectCollision(player2, player2->getX(), player2->getY() + 1) == false) {
+		player2->getImage()->move(0, player2->getSpeed());
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - player2->getSize()
+		&& detectCollision(player2, player2->getX() + 1, player2->getY()) == false) {
+		player2->getImage()->move(player2->getSpeed(), 0);
+	}
 }
 
-bool detectCollision(Player *p)
+bool detectCollision(Player *p, int x, int y)
 {
 	int w = SCREEN_W / TILE;
 	int h = SCREEN_H / TILE;
@@ -171,8 +175,8 @@ bool detectCollision(Player *p)
 			tile_x = j * TILE;
 			if (map[i][j] == Image::BLOCK1 || map[i][j] == Image::WALL1) {
 				//std::cout << tile_x << " " << tile_y << " " << p->getX() << " " << p->getY() << " " << p->getSize() << std::endl;
-				if (p->getX() < tile_x + TILE && p->getX() + p->getSize() > tile_x &&
-					p->getY() < tile_y + TILE && p->getY() + p->getSize() > tile_y) {
+				if (x < tile_x + TILE && x + p->getSize() > tile_x &&
+					y < tile_y + TILE && y + p->getSize() > tile_y) {
 					return true;
 				}
 			}
