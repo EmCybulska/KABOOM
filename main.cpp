@@ -21,6 +21,7 @@ void processEvents(sf::RenderWindow *w);
 void generateMap();
 void drawMap(sf::RenderWindow *w);
 void movePlayer(sf::RenderWindow *w);
+void explosion(sf::RenderWindow *w);
 bool detectCollision(Player *p, int x, int y);
 
 int main()
@@ -30,7 +31,8 @@ int main()
 	player2 = new Player(SCREEN_W - 2 * TILE, SCREEN_H - 2 * TILE, *ImageHolder::getInstance().getImage(Image::ROBOT2));
 	player1->getImage()->setScale(0.4, 0.4);
 	player2->getImage()->setScale(0.4, 0.4);
-
+	bomb1 = new Bomb(player1->getX(), player1->getY());
+	bomb2 = new Bomb(player2->getX(), player2->getY());
 	generateMap();
 	//s.setTexture(*ImageHolder::getInstance().getImage(Image::MENU));
 
@@ -137,24 +139,24 @@ void movePlayer(sf::RenderWindow *w)
 {
 	//Player 1
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && player1->getY() > 0 &&
-		detectCollision(player1, player1->getX(), player1->getY() - 1) == false) {
+		detectCollision(player1, player1->getX(), player1->getY() - player1->getSpeed()) == false) {
 		player1->getImage()->move(0, -player1->getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && player1->getX() > 0 
-		&& detectCollision(player1, player1->getX() - 1, player1->getY()) == false) {
+		&& detectCollision(player1, player1->getX() - player1->getSpeed(), player1->getY()) == false) {
 		player1->getImage()->move(-player1->getSpeed(), 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && player1->getY() < SCREEN_H - player1->getSize()
-		&& detectCollision(player1, player1->getX(), player1->getY() + 1) == false) {
+		&& detectCollision(player1, player1->getX(), player1->getY() + player1->getSpeed()) == false) {
 		player1->getImage()->move(0, player1->getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && player1->getX() < SCREEN_W - player1->getSize() 
-		&& detectCollision(player1, player1->getX() + 1, player1->getY()) == false) {
+		&& detectCollision(player1, player1->getX() + player1->getSpeed(), player1->getY()) == false) {
 		player1->getImage()->move(player1->getSpeed(), 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && player1->getBomb() > 0) {
-		bomb1 = new Bomb(player1->getX(), player1->getY());
+		bomb1->setPosition(player1->getX(), player1->getY());
 		b1 = true;
 		player1->setBomb(-1);
 	}
@@ -162,24 +164,24 @@ void movePlayer(sf::RenderWindow *w)
 
 	//Player 2
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0 
-		&& detectCollision(player2, player2->getX(), player2->getY() - 1) == false) {
+		&& detectCollision(player2, player2->getX(), player2->getY() - player2->getSpeed()) == false) {
 		player2->getImage()->move(0, -player2->getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0 
-		&& detectCollision(player2, player2->getX() - 1, player2->getY()) == false) {
+		&& detectCollision(player2, player2->getX() - player2->getSpeed(), player2->getY()) == false) {
 		player2->getImage()->move(-player2->getSpeed(), 0);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - player2->getSize()
-		&& detectCollision(player2, player2->getX(), player2->getY() + 1) == false) {
+		&& detectCollision(player2, player2->getX(), player2->getY() + player2->getSpeed()) == false) {
 		player2->getImage()->move(0, player2->getSpeed());
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - player2->getSize()
-		&& detectCollision(player2, player2->getX() + 1, player2->getY()) == false) {
+		&& detectCollision(player2, player2->getX() + player2->getSpeed(), player2->getY()) == false) {
 		player2->getImage()->move(player2->getSpeed(), 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && player2->getBomb() > 0) {
-		bomb2 = new Bomb(player2->getX(), player2->getY());
+		bomb2->setPosition(player2->getX(), player2->getY());
 		b2 = true;
 		player2->setBomb(-1);
 	}
@@ -207,4 +209,28 @@ bool detectCollision(Player *p, int x, int y)
 		tile_y = (i + 1) * TILE;
 	}
 	return false;
+}
+
+void explosion(sf::RenderWindow *win, Bomb *bomb)
+{
+	int w = SCREEN_W / TILE;
+	int h = SCREEN_H / TILE;
+	int x = 0;
+	int y = 0;
+
+	int i = 0;
+	for (i = 0; i < w; i++) {
+		x = i * TILE;
+		if (bomb->getX() < x)
+			break;	
+	}
+
+	int j;
+	for (j = 0; j < h; j++) {
+		y = j * TILE;
+		if (bomb->getY() < y)
+			break;
+	}
+
+
 }

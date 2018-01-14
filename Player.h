@@ -14,6 +14,7 @@ private:
 	int _size;
 	int _bomb;
 	int _hp;
+	int score;
 	sf::Texture _texture;
 	sf::Sprite *_image;
 	//std::vector<Bomb> *vec;

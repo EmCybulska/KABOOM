@@ -10,6 +10,8 @@ Bomb::Bomb(int x, int y) : _x(x), _y(y)
 	_image->setPosition(_x, _y);
 	_explosion = new sf::Sprite;
 	_explosion->setTexture(*ImageHolder::getInstance().getImage(Image::EXPLOSION));
+	_range = 3;
+	_damage = 10;
 }
 
 
@@ -27,4 +29,30 @@ sf::Sprite * Bomb::getImage()
 sf::Sprite * Bomb::getExplosion()
 {
 	return _explosion;
+}
+
+int Bomb::getRange()
+{
+	return _range;
+}
+
+int Bomb::getX()
+{
+	_x = _image->getPosition().x;
+	return _x;
+
+}
+
+int Bomb::getY()
+{
+	_y = _image->getPosition().y;
+	return _y;
+}
+
+void Bomb::setPosition(int x, int y)
+{
+	_x = x;
+	_y = y;
+	_image->setPosition(_x, _y);
+
 }

@@ -17,5 +17,9 @@ public:
 	~Bomb();
 	sf::Sprite* getImage();
 	sf::Sprite* getExplosion();
+	int getRange();
+	int getX();
+	int getY();
+	void setPosition(int x, int y);
 };
 
