@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <unordered_map>
 #include <vector>
@@ -6,6 +8,7 @@
 enum Image {
 	MENU,
 	BOMB,
+	EXPLOSION,
 	ROBOT1,
 	ROBOT2,
 	GROUND1,

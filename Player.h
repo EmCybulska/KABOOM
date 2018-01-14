@@ -1,7 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
+#include "Bomb.h"
 
 class Player
 {
@@ -10,8 +12,11 @@ private:
 	int _y;
 	int _speed;
 	int _size;
+	int _bomb;
+	int _hp;
 	sf::Texture _texture;
 	sf::Sprite *_image;
+	//std::vector<Bomb> *vec;
 public:
 	Player(int x, int y, sf::Texture t);
 	~Player();
@@ -23,5 +28,8 @@ public:
 	int getX();
 	int getY();
 	int getSize();
+	void setBomb(int n);
+	int getBomb();
+	void newBomb();
 };
 

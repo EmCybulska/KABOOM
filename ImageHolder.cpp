@@ -6,6 +6,7 @@ ImageHolder::ImageHolder()
 {
 	_imagesMap[Image::MENU] = addImage("menu.png");
 	_imagesMap[Image::BOMB] = addImage("bomb.png");
+	_imagesMap[Image::EXPLOSION] = addImage("explosion.png");
 	_imagesMap[Image::ROBOT1] = addImage("robot1.png");
 	_imagesMap[Image::ROBOT2] = addImage("robot2.png");
 	_imagesMap[Image::GROUND1] = addImage("ground1.png");
