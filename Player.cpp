@@ -4,9 +4,9 @@
 
 Player::Player(int x, int y, sf::Texture t) : _x(x), _y(y), _texture(t) 
 {
-	_speed = 3;
+	_speed = 5;
 	_size = 25;
-	_hp = 1;
+	_life = 1;
 	_bombAmount = 1;
 	_image = new sf::Sprite;
 	_image->setTexture(_texture);
@@ -81,4 +81,14 @@ void Player::newBomb()
 		
 	
 	}
+}
+
+int Player::getLife()
+{
+	return _life;
+}
+
+void Player::setLife(int n)
+{
+	_life += n;
 }

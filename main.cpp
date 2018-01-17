@@ -12,6 +12,7 @@ const int TILE = 32;
 int **map;
 bool b1 = false;
 bool b2 = false;
+bool game = true;
 Player *player1;
 Player *player2;
 Bomb *bomb1;
@@ -20,12 +21,14 @@ Bomb *bomb2;
 sf::Clock timer1;
 sf::Clock timer2;
 
+void drawMenu(sf::RenderWindow *w);
 void processEvents(sf::RenderWindow *w);
 void generateMap();
 void drawMap(sf::RenderWindow *w);
 void movePlayer(sf::RenderWindow *w);
 void explosion(sf::RenderWindow *w, Bomb *bomb);
 void explosionEffects(Bomb *bomb);
+void makeDamage(Player *p, int explosion_x, int explosion_y);
 bool detectCollision(Player *p, int x, int y);
 
 
@@ -39,15 +42,16 @@ int main()
 	bomb1 = new Bomb(player1->getX(), player1->getY());
 	bomb2 = new Bomb(player2->getX(), player2->getY());
 	generateMap();
-	//s.setTexture(*ImageHolder::getInstance().getImage(Image::MENU));
 
 	int counter = 0;
 
 	while (window.isOpen()) {
 		counter++;
-		if(counter % 20 == 0)
-			processEvents(&window);
+		if (game) {
+			if (counter % 20 == 0)
+				processEvents(&window);
 			drawMap(&window);
+		}
 	}
 
 	return 0;
@@ -248,12 +252,15 @@ bool detectCollision(Player *p, int x, int y)
 
 void explosion(sf::RenderWindow *win, Bomb *bomb)
 {
-	int x = ((bomb->getX() + TILE / 2) / TILE) * TILE;
+	int x = ((bomb->getX() + TILE / 2) / TILE) * TILE; //pozycja na planszy
 	int y = ((bomb->getY() + TILE / 2) / TILE) * TILE;
 
 	//explosion animation
 	bomb->setExplosionPos(x , y);
 	win->draw(*bomb->getExplosion());
+
+	makeDamage(player1, x, y);
+	makeDamage(player2, x, y);
 
 	int n = x / TILE;
 	int tmp = x;
@@ -265,6 +272,8 @@ void explosion(sf::RenderWindow *win, Bomb *bomb)
 			break;
 		
 		bomb->setExplosionPos(tmp, y);
+		makeDamage(player1, tmp, y);
+		makeDamage(player2, tmp, y);
 		win->draw(*bomb->getExplosion());
 	}
 
@@ -278,6 +287,8 @@ void explosion(sf::RenderWindow *win, Bomb *bomb)
 			break;
 
 		bomb->setExplosionPos(tmp, y);
+		makeDamage(player1, tmp, y);
+		makeDamage(player2, tmp, y);
 		win->draw(*bomb->getExplosion());
 	}
 
@@ -291,6 +302,8 @@ void explosion(sf::RenderWindow *win, Bomb *bomb)
 			break;
 
 		bomb->setExplosionPos(x, tmp);
+		makeDamage(player1, x, tmp);
+		makeDamage(player2, x, tmp);
 		win->draw(*bomb->getExplosion());
 	}
 
@@ -304,6 +317,8 @@ void explosion(sf::RenderWindow *win, Bomb *bomb)
 			break;
 
 		bomb->setExplosionPos(x, tmp);
+		makeDamage(player1, x, tmp);
+		makeDamage(player2, x, tmp);
 		win->draw(*bomb->getExplosion());
 	}
 
@@ -350,5 +365,15 @@ void explosionEffects(Bomb *bomb)
 			break;
 
 		map[n][x / TILE] = Image::GROUND1;
+	}
+}
+
+void makeDamage(Player *p, int explosion_x, int explosion_y)
+{
+	int x = ((p->getX() + TILE / 2) / TILE) * TILE;
+	int y = ((p->getY() + TILE / 2) / TILE) * TILE;
+	if (x == explosion_x && y == explosion_y) {
+		p->setLife(-1);
+		game = false;
 	}
 }

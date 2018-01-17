@@ -13,7 +13,7 @@ private:
 	int _speed;
 	int _size;
 	int _bombAmount;
-	int _hp;
+	int _life;
 	int _score;
 	sf::Texture _texture;
 	sf::Sprite *_image;
@@ -34,5 +34,7 @@ public:
 	void setBomb(int n);
 	int getBomb();
 	void newBomb();
+	int getLife();
+	void setLife(int n);
 };
 
