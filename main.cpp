@@ -17,12 +17,17 @@ Player *player2;
 Bomb *bomb1;
 Bomb *bomb2;
 
+sf::Clock timer1;
+sf::Clock timer2;
+
 void processEvents(sf::RenderWindow *w);
 void generateMap();
 void drawMap(sf::RenderWindow *w);
 void movePlayer(sf::RenderWindow *w);
-void explosion(sf::RenderWindow *w);
+void explosion(sf::RenderWindow *w, Bomb *bomb);
+void explosionEffects(Bomb *bomb);
 bool detectCollision(Player *p, int x, int y);
+
 
 int main()
 {
@@ -98,7 +103,6 @@ void drawMap(sf::RenderWindow *win) {
 	int y = 0;
 
 	sf::Sprite s;
-	s.setOrigin(0, 0);
 	s.scale(0.5, 0.5);
 
 	win->clear();
@@ -117,10 +121,39 @@ void drawMap(sf::RenderWindow *win) {
 
 	win->draw(*player1->getImage());
 	win->draw(*player2->getImage());
-	if (b1)
-		win->draw(*bomb1->getImage());
-	if (b2)
-		win->draw(*bomb2->getImage());
+
+	//*player1->drawBombs(Window* window);
+	/*
+		for(...) {
+		window->draw(bomby[i].draw()
+	
+	*/
+	if (b1) {
+		if (timer1.getElapsedTime().asSeconds() > 5) {
+			explosion(win, bomb1);
+			if (timer1.getElapsedTime().asSeconds() > 6) {
+				explosionEffects(bomb1);
+				player1->setBomb(1);
+				b1 = false;
+			}
+		}
+		else
+			win->draw(*bomb1->getImage());
+	}
+	
+	if (b2) {
+		if (timer2.getElapsedTime().asSeconds() > 5) {
+			explosion(win, bomb2);
+			if (timer2.getElapsedTime().asSeconds() > 6) {
+				explosionEffects(bomb2);
+				player2->setBomb(1);
+				b2 = false;
+			}
+		}
+		else
+			win->draw(*bomb2->getImage());
+	}
+
 	win->display();
 }
 
@@ -155,35 +188,37 @@ void movePlayer(sf::RenderWindow *w)
 		player1->getImage()->move(player1->getSpeed(), 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && player1->getBomb() > 0) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player1->getBomb() > 0) {
 		bomb1->setPosition(player1->getX(), player1->getY());
 		b1 = true;
 		player1->setBomb(-1);
+		timer1.restart();
 	}
 
 
 	//Player 2
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && player2->getY() > 0 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && player2->getY() > 0 
 		&& detectCollision(player2, player2->getX(), player2->getY() - player2->getSpeed()) == false) {
 		player2->getImage()->move(0, -player2->getSpeed());
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J) && player2->getX() > 0 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && player2->getX() > 0 
 		&& detectCollision(player2, player2->getX() - player2->getSpeed(), player2->getY()) == false) {
 		player2->getImage()->move(-player2->getSpeed(), 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player2->getY() < SCREEN_H - player2->getSize()
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && player2->getY() < SCREEN_H - player2->getSize()
 		&& detectCollision(player2, player2->getX(), player2->getY() + player2->getSpeed()) == false) {
 		player2->getImage()->move(0, player2->getSpeed());
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) && player2->getX() < SCREEN_W - player2->getSize()
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && player2->getX() < SCREEN_W - player2->getSize()
 		&& detectCollision(player2, player2->getX() + player2->getSpeed(), player2->getY()) == false) {
 		player2->getImage()->move(player2->getSpeed(), 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O) && player2->getBomb() > 0) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && player2->getBomb() > 0) {
 		bomb2->setPosition(player2->getX(), player2->getY());
 		b2 = true;
 		player2->setBomb(-1);
+		timer2.restart();
 	}
 }
 
@@ -213,24 +248,107 @@ bool detectCollision(Player *p, int x, int y)
 
 void explosion(sf::RenderWindow *win, Bomb *bomb)
 {
-	int w = SCREEN_W / TILE;
-	int h = SCREEN_H / TILE;
-	int x = 0;
-	int y = 0;
+	int x = ((bomb->getX() + TILE / 2) / TILE) * TILE;
+	int y = ((bomb->getY() + TILE / 2) / TILE) * TILE;
 
-	int i = 0;
-	for (i = 0; i < w; i++) {
-		x = i * TILE;
-		if (bomb->getX() < x)
-			break;	
-	}
+	//explosion animation
+	bomb->setExplosionPos(x , y);
+	win->draw(*bomb->getExplosion());
 
-	int j;
-	for (j = 0; j < h; j++) {
-		y = j * TILE;
-		if (bomb->getY() < y)
+	int n = x / TILE;
+	int tmp = x;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja na lewo od bomby
+	{
+		tmp -= TILE;
+		n--;
+		if (map[y / TILE][n] == Image::WALL1)
 			break;
+		
+		bomb->setExplosionPos(tmp, y);
+		win->draw(*bomb->getExplosion());
 	}
 
+	n = x / TILE;
+	tmp = x;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja na prawo od bomby
+	{
+		tmp += TILE;
+		n++;
+		if (map[y / TILE][n] == Image::WALL1)
+			break;
 
+		bomb->setExplosionPos(tmp, y);
+		win->draw(*bomb->getExplosion());
+	}
+
+	n = y / TILE;
+	tmp = y;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja w górê od bomby
+	{
+		tmp -= TILE;
+		n--;
+		if (map[n][x / TILE] == Image::WALL1)
+			break;
+
+		bomb->setExplosionPos(x, tmp);
+		win->draw(*bomb->getExplosion());
+	}
+
+	n = y / TILE;
+	tmp = y;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja w dó³ od bomby
+	{
+		tmp += TILE;
+		n++;
+		if (map[n][x / TILE] == Image::WALL1)
+			break;
+
+		bomb->setExplosionPos(x, tmp);
+		win->draw(*bomb->getExplosion());
+	}
+
+}
+
+void explosionEffects(Bomb *bomb)
+{
+	int x = ((bomb->getX() + TILE / 2) / TILE) * TILE;
+	int y = ((bomb->getY() + TILE / 2) / TILE) * TILE;
+
+	int n = x / TILE;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja na lewo od bomby
+	{
+		n--;
+		if (map[y / TILE][n] == Image::WALL1)
+			break;
+		map[y / TILE][n] = Image::GROUND1;
+	}
+
+	n = x / TILE;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja na prawo od bomby
+	{
+		n++;
+		if (map[y / TILE][n] == Image::WALL1)
+			break;
+		map[y / TILE][n] = Image::GROUND1;
+	}
+
+	n = y / TILE;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja w górê od bomby
+	{
+		n--;
+		if (map[n][x / TILE] == Image::WALL1)
+			break;
+
+		map[n][x / TILE] = Image::GROUND1;
+	}
+
+	n = y / TILE;
+	for (int k = 0; k < bomb->getRange(); k++) //eksplozja w dó³ od bomby
+	{
+		n++;
+		if (map[n][x / TILE] == Image::WALL1)
+			break;
+
+		map[n][x / TILE] = Image::GROUND1;
+	}
 }

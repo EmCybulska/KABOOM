@@ -12,11 +12,13 @@ private:
 	int _y;
 	int _speed;
 	int _size;
-	int _bomb;
+	int _bombAmount;
 	int _hp;
-	int score;
+	int _score;
 	sf::Texture _texture;
 	sf::Sprite *_image;
+	sf::Clock _bombClock;
+	Bomb * _bomb;
 	//std::vector<Bomb> *vec;
 public:
 	Player(int x, int y, sf::Texture t);

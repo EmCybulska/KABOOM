@@ -21,5 +21,6 @@ public:
 	int getX();
 	int getY();
 	void setPosition(int x, int y);
+	void setExplosionPos(int x, int y);
 };
 
