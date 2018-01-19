@@ -14,7 +14,6 @@ private:
 	int _size;
 	int _bombAmount;
 	int _life;
-	int _score;
 	sf::Texture _texture;
 	sf::Sprite *_image;
 	sf::Clock _bombClock;

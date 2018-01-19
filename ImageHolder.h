@@ -6,7 +6,7 @@
 #include <iostream>
 
 enum Image {
-	MENU,
+	//MENU,
 	BOMB,
 	EXPLOSION,
 	ROBOT1,
