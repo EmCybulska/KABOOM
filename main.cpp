@@ -2,6 +2,7 @@
 #include <thread>
 #include <chrono>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "ImageHolder.h"
 #include "Player.h"
 #include "Bomb.h"
@@ -17,6 +18,8 @@ int **map;
 bool b1 = false;
 bool b2 = false;
 bool game = true;
+bool s1 = false;
+bool s2 = false;
 
 Player *player1;
 Player *player2;
@@ -26,6 +29,7 @@ Bomb *bomb2;
 sf::Clock timer1;
 sf::Clock timer2;
 sf::Font font;
+sf::Sound sound;
 
 
 void drawMenu(sf::RenderWindow *w);
@@ -46,6 +50,14 @@ int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "KABOOM!", sf::Style::Fullscreen);
+
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("resources/sound/Explosion.wav")) {
+		system("pause");
+		return -1;
+	}
+	
+	sound.setBuffer(buffer);
 
 	if (!font.loadFromFile("resources/Mecha.ttf"))
 	{
@@ -167,10 +179,15 @@ void drawMap(sf::RenderWindow *win) {
 	if (b1) {
 		if (timer1.getElapsedTime().asSeconds() > 5) {
 			explosion(win, bomb1);
+			if (!s1) {
+				sound.play();
+				s1 = true;
+			}
 			if (timer1.getElapsedTime().asSeconds() > 6) {
 				explosionEffects(bomb1);
 				player1->setBomb(1);
 				b1 = false;
+				s1 = false;
 			}
 		}
 		else
@@ -180,10 +197,15 @@ void drawMap(sf::RenderWindow *win) {
 	if (b2) {
 		if (timer2.getElapsedTime().asSeconds() > 5) {
 			explosion(win, bomb2);
+			if (!s2) {
+				sound.play();
+				s2 = true;
+			}
 			if (timer2.getElapsedTime().asSeconds() > 6) {
 				explosionEffects(bomb2);
 				player2->setBomb(1);
 				b2 = false;
+				s2 = false;
 			}
 		}
 		else
@@ -197,7 +219,7 @@ void drawMenu(sf::RenderWindow * w)
 {
 	sf::Text title("KABOOM!", font, 80);
 	title.setStyle(sf::Text::Bold);
-
+	title.setFillColor(sf::Color::Yellow);
 	title.setPosition(SCREEN_W / 2 - title.getGlobalBounds().width / 2, 20);
 
 	const int ile = 2;
@@ -246,7 +268,17 @@ void drawMenu(sf::RenderWindow * w)
 				tekst[i].setFillColor(sf::Color::Cyan);
 			else tekst[i].setFillColor(sf::Color::White);
 
+			sf::Sprite r1;
+			sf::Sprite r2;
+			r1.setTexture(*ImageHolder::getInstance().getImage(Image::ROBOT1));
+			r2.setTexture(*ImageHolder::getInstance().getImage(Image::ROBOT2));
+
 			w->clear();
+
+			r1.setPosition(SCREEN_W / 4 - 64, SCREEN_H / 2 - 64);
+			w->draw(r1);
+			r2.setPosition(3 * SCREEN_W / 4 + 64, SCREEN_H / 2 - 64);
+			w->draw(r2);
 
 			w->draw(title);
 			for (int i = 0; i<ile; i++)
@@ -479,12 +511,18 @@ void makeDamage(Player *p, int explosion_x, int explosion_y)
 
 void gameOver(sf::RenderWindow *w)
 {
+	sf::Sprite s;
 	std::string str;
-	if (player1->getLife() == 0)
+	if (player1->getLife() == 0) {
 		str = "The Winner is Player 2!";
-	else if (player2->getLife() == 0)
+		s.setTexture(*ImageHolder::getInstance().getImage(Image::ROBOT2));
+	}
+	else if (player2->getLife() == 0) {
 		str = "The Winner is Player 1!";
+		s.setTexture(*ImageHolder::getInstance().getImage(Image::ROBOT1));
+	}
 
+	s.setPosition(SCREEN_W / 2 - 32, SCREEN_H / 2 - 32);
 
 	sf::Text text(str, font, 80);
 	text.setStyle(sf::Text::Bold);
@@ -492,11 +530,12 @@ void gameOver(sf::RenderWindow *w)
 	text.setFillColor(sf::Color::Red);
 
 	sf::Text text2("Press ESC to return to the menu", font, 65);
-	text2.setPosition(SCREEN_W / 2 - text.getGlobalBounds().width / 2, 500);
+	text2.setPosition(SCREEN_W / 2 - (text.getGlobalBounds().width / 2), 500);
 	text2.setFillColor(sf::Color::White);
 	
 	w->clear();
 	w->draw(text);
+	w->draw(s);
 	w->draw(text2);
 	w->display();
 

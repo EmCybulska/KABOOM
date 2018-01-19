@@ -4,7 +4,7 @@
 
 Player::Player(int x, int y, sf::Texture t) : _x(x), _y(y), _texture(t) 
 {
-	_speed = 3;
+	_speed = 2;
 	_size = 25;
 	_life = 1;
 	_bombAmount = 1;
